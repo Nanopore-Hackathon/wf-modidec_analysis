@@ -1,0 +1,195 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "https://raw.githubusercontent.com/./master/nextflow_schema.json",
+    "title": "NanopoReaTA_hackathon",
+    "workflow_title": "NanopoReaTA_hackatho,",
+    "description": "Nextflow workflow for running NanopoReaTA.",
+    "demo_url": "https://ont-exd-int-s3-euwst1-epi2me-labs.s3.amazonaws.com/wf-template/wf-template-demo.tar.gz",
+    "aws_demo_url": "https://ont-exd-int-s3-euwst1-epi2me-labs.s3.amazonaws.com/wf-template/wf-template-demo/aws.nextflow.config",
+    "url": "https://github.com/Nanopore-Hackathon/NanopoReaTA_hackathon",
+    "type": "object",
+    "definitions": {
+        "input": {
+            "title": "Input Options",
+            "type": "object",
+            "fa_icon": "fas fa-arrow-right",
+            "description": "Parameters for finding and handling input data for NanopoReaTA.",
+            "properties": {
+                "pod5_path": {
+                    "type": "string",
+                    "format": "path",
+                    "title": "Pod5 folder path",
+                    "description": "Folder with the pod5 files of interest"
+                },
+                "bam_path": {
+                    "type": "string",
+                    "title": "Bam file path",
+                    "format": "file-path",
+                    "description": "File path to the bam file of interest",
+                    "help_text": "Please use a bam file that has been basecalled with dorado using the --emit-moves option and was mapped by mimimap using the --MD flags."
+                },
+                "model_path": {
+                    "type": "string",
+                    "format": "path",
+                    "title": "Folder path to classification model",
+                    "description": "Please provide a folder path to a custom NN model",
+                },
+                "level_table_file": {
+                    "type": "string",
+                    "title": "File path to ONT's kmer table for RNA004 reads",
+                    "format": "file-path",
+                    "description": "Provide a file path to ONT's RNA004 table",
+                    "help_text": "The kmer tables are available on ONT's github page.(https://github.com/nanoporetech/kmer_models)"
+                },
+                "reference_path": {
+                    "type": "string",
+                    "title": "Bam file path",
+                    "format": "file-path",
+                    "description": "Provide a txt file with the reference fragment of interest",
+                    "help_text": ""
+                },
+                "start_index": {
+                    "type": "integer",
+                    "default": 0,
+                    "description": "Define the start index of reads you want to retrieve from pod5 file for analysis",
+                    "help_text": "Pod5 files store reads in a sorted manner. You can analyse reads by defining a start and end index."
+                },
+                "end_index": {
+                    "type": "integer",
+                    "default": 200,
+                    "description": "Define the end index of reads you want to retrieve from pod5 file for analysis",
+                    "help_text": "Pod5 files store reads in a sorted manner. You can analyse reads by defining a start and end index."
+                },
+                "chunk_size": {
+                    "type": "integer",
+                    "default": 400,
+                    "description": "Define the size of chunks that will be loaded by the model.",
+                    "help_text": "The neural network analysis reads in defined chunk sizes using a sliding window approach."
+                },
+                "max_seq_length": {
+                    "type": "integer",
+                    "default": 40,
+                    "description": "Define the maximal length of a sequence that will be loaded by the model at once.",
+                    "help_text": "The neural network analysis reads in defined sequence lengths using a sliding window approach."
+                }
+                
+            },
+            "allOf": [
+                {
+                    "required": [
+                        "start_index",
+                        "end_index",
+                        "chunk_size",
+                        "max_seq_length",
+                        "reference_path",  
+                        "pod5_path",
+                        "bam_path",
+                        "model_path", 
+                        "level_table_file"                   ]
+                }]
+        },
+        "advanced_options": {
+            "title": "Advanced Options",
+            "type": "object",
+            "fa_icon": "far fa-question-circle",
+            "description": "Advanced options for configuring processes inside the workflow.",
+            "help_text": "These advanced options do not need to be changed for typical use, but allow fine tuning of workflows for users who want more control over the workflow.",
+            "properties": {
+                "batchsize": {
+                    "type": "integer",
+                    "description": "How many files would you like to process per iteration?",
+                    "default": 30
+                },
+                "drs": {
+                    "title": "Direct RNA",
+                    "type": "integer",
+                    "description": "“Is sample direct RNA ? ",
+                    "default": 1
+                },
+                "threads": {
+                    "type": "integer",
+                    "description": "How many thread you want to use?",
+                    "default": 8
+                },
+                "script_dir": {
+                    "type": "string",
+                    "format": "path",
+                    "description": "Path to the directory nextflow needs to get files from, here it could be the repository"
+                }
+            }
+        },
+        "misc": {
+            "title": "Miscellaneous Options",
+            "type": "object",
+            "description": "Everything else.",
+            "default": "",
+            "properties": {
+                "disable_ping": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Enable to prevent sending a workflow ping."
+                },
+                "help": {
+                    "type": "boolean",
+                    "description": "Display help text.",
+                    "fa_icon": "fas fa-question-circle",
+                    "default": false,
+                    "hidden": true
+                },
+                "version": {
+                    "type": "boolean",
+                    "description": "Display version and exit.",
+                    "fa_icon": "fas fa-question-circle",
+                    "default": false,
+                    "hidden": true
+                }
+            }
+        }
+    },
+    "allOf": [
+        {
+            "$ref": "#/definitions/input"
+        },
+        {
+            "$ref": "#/definitions/references"
+        },
+        {
+            "$ref": "#/definitions/advanced_options"
+        },
+        {
+            "$ref": "#/definitions/misc"
+        }
+    ],
+    "properties": {
+        "aws_image_prefix": {
+            "type": "string",
+            "hidden": true
+        },
+        "aws_queue": {
+            "type": "string",
+            "hidden": true
+        },
+        "monochrome_logs": {
+            "type": "boolean"
+        },
+        "validate_params": {
+            "type": "boolean",
+            "default": true
+        },
+        "show_hidden_params": {
+            "type": "boolean"
+        }
+    },
+    "resources": {
+        "recommended": {
+            "cpus": 16,
+            "memory": "64GB"
+        },
+        "minimum": {
+            "cpus": 16,
+            "memory": "64GB"
+        },
+        "run_time": "5 minutes per sample",
+        "arm_support": true 
+    }
+}

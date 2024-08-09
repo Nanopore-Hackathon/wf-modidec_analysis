@@ -1,0 +1,10 @@
+start_index: 0
+end_index: 200
+chunk_size: 400
+max_seq_length: 40
+reference_path: "/home/stefan/Stefan_epi2me/GFPpsi_mcherry.txt"   
+pod5_path: "/home/stefan/Stefan_epi2me/GFPpsi_mCherry_pod5/"
+bam_path: "/home/stefan/Stefan_epi2me/GFP_psi_bam/GFPPsi_alignment.bam"
+model_path: "/home/stefan//Stefan_epi2me/ModiDeC_V3_new3_400p_onlyPSU_30kdata_20240806_2/" 
+level_table_file: "/home/stefan/kmer_models/rna004/9mer_levels_v1.txt" 
+output_dir: "./"

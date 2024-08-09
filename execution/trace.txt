@@ -1,0 +1,2 @@
+task_id	hash	native_id	name	status	exit	submit	duration	realtime	%cpu	peak_rss	peak_vmem	rchar	wchar
+1	a9/af2753	1274098	RunNeuralNetwork (1)	COMPLETED	0	2024-08-08 10:46:55.217	1m 7s	1m 3s	702.7%	3.6 GB	28.1 GB	473.5 MB	3.6 MB
