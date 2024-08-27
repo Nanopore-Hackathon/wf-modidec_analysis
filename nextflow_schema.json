@@ -1,12 +1,12 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "$id": "https://raw.githubusercontent.com/./master/nextflow_schema.json",
-    "title": "NanopoReaTA_hackathon",
-    "workflow_title": "NanopoReaTA_hackatho,",
-    "description": "Nextflow workflow for running NanopoReaTA.",
-    "demo_url": "https://ont-exd-int-s3-euwst1-epi2me-labs.s3.amazonaws.com/wf-template/wf-template-demo.tar.gz",
-    "aws_demo_url": "https://ont-exd-int-s3-euwst1-epi2me-labs.s3.amazonaws.com/wf-template/wf-template-demo/aws.nextflow.config",
-    "url": "https://github.com/Nanopore-Hackathon/NanopoReaTA_hackathon",
+    "title": "wf-modidec",
+    "workflow_title": "wf-modidec",
+    "description": "Nextflow workflow for running Modidec.",
+    "demo_url": "",
+    "aws_demo_url": "",
+    "url": "https://github.com/nanopore-hackathon/wf-modidec",
     "type": "object",
     "definitions": {
         "input": {
@@ -32,7 +32,7 @@
                     "type": "string",
                     "format": "path",
                     "title": "Folder path to classification model",
-                    "description": "Please provide a folder path to a custom NN model",
+                    "description": "Please provide a folder path to a custom NN model"
                 },
                 "level_table_file": {
                     "type": "string",
@@ -72,21 +72,8 @@
                     "description": "Define the maximal length of a sequence that will be loaded by the model at once.",
                     "help_text": "The neural network analysis reads in defined sequence lengths using a sliding window approach."
                 }
-                
-            },
-            "allOf": [
-                {
-                    "required": [
-                        "start_index",
-                        "end_index",
-                        "chunk_size",
-                        "max_seq_length",
-                        "reference_path",  
-                        "pod5_path",
-                        "bam_path",
-                        "model_path", 
-                        "level_table_file"                   ]
-                }]
+            }, 
+            "required": ["start_index", "end_index", "chunk_size", "max_seq_length", "reference_path", "pod5_path", "bam_path", "model_path", "level_table_file"]
         },
         "advanced_options": {
             "title": "Advanced Options",
@@ -149,9 +136,6 @@
     "allOf": [
         {
             "$ref": "#/definitions/input"
-        },
-        {
-            "$ref": "#/definitions/references"
         },
         {
             "$ref": "#/definitions/advanced_options"
