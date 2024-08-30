@@ -283,7 +283,9 @@ def Analysis_Neural_network(
             mode="lines+markers",
             line=dict(color="rgba(72,99,156,1)"),
             hovertext=hover_text,
-            hoverinfo = "text"
+            hoverinfo = "text",
+            showlegend=True,
+            name = "Gm freq."
         )
     )
 
@@ -295,7 +297,9 @@ def Analysis_Neural_network(
             mode="lines+markers",
             line=dict(color="rgba(95,62,139,1)"),
             hovertext=hover_text,
-            hoverinfo = "text"
+            hoverinfo = "text",
+            showlegend=True,
+            name = "m6A freq."
         )
     )
 
@@ -307,7 +311,9 @@ def Analysis_Neural_network(
             mode="lines+markers",            
             line=dict(color="rgba(132,73,133,1)"),
             hovertext=hover_text,
-            hoverinfo = "text"
+            hoverinfo = "text",
+            showlegend=True,
+            name = "Ino freq."
         )
     )
 
@@ -319,19 +325,20 @@ def Analysis_Neural_network(
             mode="lines+markers",            
             line=dict(color="rgba(247,153,110,1)"),
             hovertext=hover_text,
-            hoverinfo = "text"
+            hoverinfo = "text",
+            showlegend=True,
+            name="Psi freq."
         )
     )
 
     fig.update_layout(
-        xaxis=dict(title="Position on reference", gridcolor="white", tickformat="d"),
+        xaxis=dict(title="Position on reference", gridcolor="white"),
         yaxis=dict(
             title="Modification frequency",
             gridcolor="white",
             zeroline=True,
             zerolinecolor="black",
-            zerolinewidth=0.1,
-            tickformat="d",
+            range=[0,1]
         ),
         plot_bgcolor="rgba(0,0,0,0)",
     )

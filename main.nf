@@ -8,7 +8,7 @@ nextflow.preview.recursion=true
 
 process RunNeuralNetwork{
     label "modidec"
-    publishDir (path: "${params.output_dir}/", mode: "copy")
+    publishDir (path: "${params.out_dir}/", mode: "copy")
     stageInMode "copy"
     input:
         path reference_path

@@ -43,7 +43,7 @@
                 },
                 "reference_path": {
                     "type": "string",
-                    "title": "Bam file path",
+                    "title": "Reference path",
                     "format": "file-path",
                     "description": "Provide a txt file with the reference fragment of interest",
                     "help_text": ""
