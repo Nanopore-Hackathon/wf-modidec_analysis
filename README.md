@@ -11,17 +11,7 @@ Below is a graphical overview of suggested routes through the pipeline depending
 
 [image]
 
-## Quick Start
-Test run the code:
-
-1. Install [`Miniconda`](https://conda.io/miniconda.html)
-
-2. Download the pipeline from Github
-
-3. Start running the data curation by using the following command 
-
-
-## Hackathone Tasks
+## Guideline
 Key aim: This script is already compatible with Epi2Me and can be explored as a show case. 
 
 1. Get your system up and ready
@@ -52,7 +42,7 @@ Key aim: This script is already compatible with Epi2Me and can be explored as a 
    -  Download the repository as a zip file
    -  Navigate in your filesystem to ~/epi2melabs/workflows
    -  Make a "modidec" directory
-   -  Unpack your repository in ~/epi2melabs/workflows/modidec/
+   -  Unpack your repository in ~/epi2melabs/workflows/modidec
 
 7. Open Epi2Me
    -  Continue without signing in
@@ -62,10 +52,10 @@ Key aim: This script is already compatible with Epi2Me and can be explored as a 
    -  Please have another look into the nextflow_schema.json file for a better understanding of how the menu is built.
 
 
-Credits & License
+## Credits & License
 
 This code is provided by Dr.Nicolo Alagna and the Computational Systems Genetics Group of the University Medical Center of Mainz. © 2024 All rights reserved.
 
-For the purpose of the Nanopore Hackathon, participants and collaborators of the event are granted a limited, non-exclusive, non-transferable license to use and modify the Applications for their intended purpose during the Time of the Event. Any further unauthorized reproduction, distribution, modification or publication of the Applications or their contents violates intellectual property rights and is strictly prohibited. For more please see the Terms and Conditions of the event.
+For the purpose of the Nanopore Hackathon, participants and collaborators of the event are granted a limited, non-exclusive, non-transferable license to use and modify the Applications for their intended purpose during the Time of the Event. Any further unauthorized reproduction, distribution, modification or publication of the Applications or their contents violates intellectual property rights and is strictly prohibited. For more please see the [Terms and Conditions](https://drive.google.com/file/d/18WN3YRoY9YvpYq6RCtwUQre-VAbN7jH6/view?usp=sharing) of the event.
 
 
