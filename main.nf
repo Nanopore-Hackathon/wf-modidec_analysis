@@ -9,7 +9,7 @@ nextflow.preview.recursion=true
 process RunNeuralNetwork{
     label "modidec"
     publishDir (path: "${params.out_dir}/", mode: "copy")
-    stageInMode "copy"
+    stageInMode "symlink"
     input:
         path reference_path
         path pod5_path
@@ -17,7 +17,7 @@ process RunNeuralNetwork{
         path model_path
         path level_table_file
     output:
-        path("*.html")
+        path("*.html"), emit: html
     script:
     """
     mkdir -p pod5s
