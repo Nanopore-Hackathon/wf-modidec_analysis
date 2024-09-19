@@ -1,4 +1,4 @@
-# wf-modidec_analysis (Part3: Apply model)
+# wf-modidec (Part3: Analysis)
 An Epi2Me integrated tool to detect and classify RNA modifications. 
 
 
