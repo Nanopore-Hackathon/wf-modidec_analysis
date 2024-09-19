@@ -58,7 +58,7 @@ Key aim: This script is already compatible with Epi2Me and can be explored as a 
    -  Continue without signing in
    -  Click on View workflows
    -  You should now see wf-modidec_analysis appear as a workflow (Here we often experience some trouble, so feel free to inform us if something is wrong)
-   -  Try to start the workflow and explore the menu of the workflow
+   -  Try to start the workflow and explore the menu of the workflow (The workflow will probably crash due to the lack of GPUs in your device) 
    -  Please have another look into the nextflow_schema.json file for a better understanding of how the menu is built.
 
 
