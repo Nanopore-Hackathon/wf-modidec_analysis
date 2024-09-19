@@ -21,7 +21,7 @@ Test run the code:
 3. Start running the data curation by using the following command 
 
 
-## Hackathone Tasks
+## Hackathon Tasks
 Key aim: This script is already compatible with Epi2Me and can be explored as a show case. 
 
 1. Get your system up and ready
