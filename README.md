@@ -11,7 +11,7 @@ Below is a graphical overview of suggested routes through the pipeline depending
 
 [image]
 
-## Quick Start
+## Guidelines
 Test run the code:
 
 1. Install [`Miniconda`](https://conda.io/miniconda.html)
