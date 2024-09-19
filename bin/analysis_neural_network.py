@@ -102,7 +102,6 @@ def NN_analyzer(variables, pod5_dr, bam_fh, read_id, sig_map_refiner, model, ref
     max_seq_len = variables[3]
     labels = 4
     N_miss = 0
-    # ALLERT TO ADJUST!!. maybe there is a problem with the track mode
     reference_track_mod = np.zeros([len(reference), 4])
     start_Index = variables[0]
     for name_id in read_id[variables[0] : variables[1]]:
