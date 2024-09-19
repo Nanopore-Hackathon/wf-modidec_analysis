@@ -42,7 +42,7 @@ Key aim: This script is already compatible with Epi2Me and can be explored as a 
 4. Open the bin folder and explore the analysis_neural_network.py file
    -  Check out how the argument parser was defined and how the python file is structured.
 
-5. Navigate to environments and investigate the enviroment.yaml and the Dockerfile
+5. Navigate to the envs folder and investigate the enviroment.yaml and the Dockerfile
    -  Find out how the environment.yaml is used to build the docker container
    -  Try to build the docker container yourself
    -  You can also try to pull our prebuilt docker container "stegiopast/modidec" from docker hub
