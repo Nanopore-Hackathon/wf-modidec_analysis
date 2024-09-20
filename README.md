@@ -15,8 +15,9 @@ Below is a graphical overview of suggested routes through the pipeline depending
 Get your system up and ready
     - Install [`Nextflow`](https://www.nextflow.io/docs/latest/getstarted.html#installation) (`>=23.10.0`)
     - Install [`Miniconda`](https://conda.io/miniconda.html)Install [`Docker`](https://conda.io/miniconda.html)
-    - Install [`Epi2Me Desktop`](https://labs.epi2me.io) (v5.1.14 or later)Clone the Github repository (we recommend the GitHub Desktop client)
-    - Clone ONT's kmer tabel github repository top obtain necessary [`kmer-tables`](https://github.com/nanoporetech/kmer_models) 
+    - Install [`Epi2Me Desktop`](https://labs.epi2me.io) (v5.1.14 or later)
+    - Clone the Github repository (we recommend the GitHub Desktop client)
+    - Clone ONT's kmer tabel github repository top obtain necessary [`kmer-tables`](https://github.com/nanoporetech/kmer_models)
 
 Import the workflow in Epi2Me without having a public repository
    -  Download the repository as a zip file
