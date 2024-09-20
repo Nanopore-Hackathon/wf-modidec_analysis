@@ -32,7 +32,7 @@ Open Epi2Me
    -  Try to start the workflow and explore the menu of the workflow (The workflow will probably crash due to the lack of GPUs in your device) 
    -  Please have another look into the nextflow_schema.json file for a better understanding of how the menu is built.
 
-Explore the old GUI application and the code
+Explore the native GUI application
    -  Build the conda environment in the envs folder of the repository. (conda env create -f environment_pyqtGUI.yml)
    -  activate the environment (conda activsate remora_TF2_pyQT_GUI)
    -  Navigate to the GUI_code directory of this repository. This folder represents the native state of the code before it was integrated into Epi2Me.
