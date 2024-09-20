@@ -34,7 +34,6 @@ Open Epi2Me
    -  Please have another look into the nextflow_schema.json file for a better understanding of how the menu is built.
 
 
-
 ## Guideline
 Key aim: This script is already compatible with Epi2Me and can be explored as a show case. 
 
