@@ -17,7 +17,7 @@ Import the workflow in Epi2Me:
    -  Open Epi2Me
    -  Navigate to Launch
    -  Click on import workflow -> Import from Github
-   -  Paste https://github.com/Nanopore-Hackathon/wf-modidec_data-curation into the Edit line
+   -  Paste https://github.com/Nanopore-Hackathon/wf-modidec_analysis into the Edit line
    -  Click on Download
    -  The repository should now appear on the workflow list in Launch
 
