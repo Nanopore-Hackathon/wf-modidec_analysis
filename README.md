@@ -1,7 +1,7 @@
 # Modidec - RNA modification detector and classifier
 ModiDeC is a customizable neural network to identify RNA modifications from Oxford Nanopore Technology (ONT) based direct RNA sequencing data. ModiDeC combines LSTM and a newly designed inception-res-net blocks for multi-modification-classification. Modidec is composed of three Epi2ME integratable tools (data curation,network training and analysis), allowing researchers to train the multi-modification-classification model on synthesized RNA strands mimicking physiological relevant motifs and modification patterns on transcripts of interest to investigate modification ratios of transcript derived from physiological data. During the data curation step of Modidec data derived from ONT based direct RNA sequencing experiments (RNA002 or RNA004) can be preprocessed to suit the succeeding model training step. During model training the network can be trained on the preprocessed data to optimally learn motif and modification patterns of the transcript of interest. The trained model can then be used in the analysis step of modidec to investigate modification ratios in physiological derived data.
 
-Here the analysis part is implemented. Please visit [wf-modidec_analysis](https://github.com/Nanopore-Hackathon/wf-modidec_data-curation) and [wf-modidec_training](https://github.com/Nanopore-Hackathon/wf-modidec_training) to find the complete toolset. 
+Here the analysis part is implemented. Please visit [wf-modidec_data-curation](https://github.com/Nanopore-Hackathon/wf-modidec_data-curation) and [wf-modidec_training](https://github.com/Nanopore-Hackathon/wf-modidec_training) to find the complete toolset. 
 
 ## Requirements
 
