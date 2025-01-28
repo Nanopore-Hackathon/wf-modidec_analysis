@@ -1,67 +1,30 @@
-# wf-modidec (Part3: Analysis)
-An Epi2Me integrated tool to detect and classify RNA modifications. 
+# Modidec - RNA modification detector and classifier
+ModiDeC is a customizable neural network to identify RNA modifications from Oxford Nanopore Technology (ONT) based direct RNA sequencing data. ModiDeC combines LSTM and a newly designed inception-res-net blocks for multi-modification-classification. Modidec is composed of three Epi2ME integratable tools (data curation,network training and analysis), allowing researchers to train the multi-modification-classification model on synthesized RNA strands mimicking physiological relevant motifs and modification patterns on transcripts of interest to investigate modification ratios of transcript derived from physiological data. During the data curation step of Modidec data derived from ONT based direct RNA sequencing experiments (RNA002 or RNA004) can be preprocessed to suit the succeeding model training step. During model training the network can be trained on the preprocessed data to optimally learn motif and modification patterns of the transcript of interest. The trained model can then be used in the analysis step of modidec to investigate modification ratios in physiological derived data.
 
+Here the analysis part is implemented. Please visit [wf-modidec_analysis](https://github.com/Nanopore-Hackathon/wf-modidec_data-curation) and [wf-modidec_training](https://github.com/Nanopore-Hackathon/wf-modidec_training) to find the complete toolset. 
 
-## Introduction
-In this directory you find part 3 of the code from ModiDec. The scripts located in ./bin facilitate the application of the trained model. You can find test data in the ./test folder of this repository.
+## Requirements
 
-
-### Functionality Overview
-Below is a graphical overview of suggested routes through the pipeline depending on the desired output.
-
-[image]
-
-## Quickstart
-Get your system up and ready
-Install [`Nextflow`](https://www.nextflow.io/docs/latest/getstarted.html#installation) (`>=23.10.0`)
-   -  Install [`Miniconda`](https://conda.io/miniconda.html)Install [`Docker`](https://conda.io/miniconda.html)
+Install dependencies on your system:
    -  Install [`Epi2Me Desktop`](https://labs.epi2me.io) (v5.1.14 or later)
-   -  Clone the Github repository (we recommend the GitHub Desktop client)
-   -  Clone ONT's kmer tabel github repository top obtain necessary [`kmer-tables`](https://github.com/nanoporetech/kmer_models)
+   -  Install [`Miniconda`](https://conda.io/miniconda.html)
+   -  Install [`Docker`](https://conda.io/miniconda.html)
+   -  Install [`Nextflow`](https://www.nextflow.io/docs/latest/getstarted.html#installation) (`>=23.10.0`)
+   -  Install samtools and minimap
+   -  Make sure your [nvidia GPU drivers](https://docs.nvidia.com/datacenter/tesla/driver-installation-guide/#ubuntu-installation) are installed and functional.
 
-Import the workflow in Epi2Me without having a public repository
-   -  Download the repository as a zip file
-   -  Navigate in your filesystem to ~/epi2melabs/workflows
-   -  Make a "modidec" directory
-   -  Unpack your repository in ~/epi2melabs/workflows/modidec
-
-Open Epi2Me
-   -  Continue without signing in
-   -  Click on View workflows
-   -  You should now see wf-modidec_analysis appear as a workflow (Here we often experience some trouble, so feel free to inform us if something is wrong)
-   -  Try to start the workflow and explore the menu of the workflow (The workflow will probably crash due to the lack of GPUs in your device) 
-   -  Please have another look into the nextflow_schema.json file for a better understanding of how the menu is built.
-
-Explore the native GUI application
-   -  Build the conda environment in the envs folder of the repository. (conda env create -f environment_pyqtGUI.yml)
-   -  activate the environment (conda activsate remora_TF2_pyQT_GUI)
-   -  Navigate to the GUI_code directory of this repository. This folder represents the native state of the code before it was integrated into Epi2Me.
-   -  Start the GUI (python Analysis_platform_GUI.py)
-   -  Feel free to explore the code in the GUI_code folder together with the code in the bin folder and find out which variables have been used in both scripts. This should give you a hint about how to transform the code during the Hackathon.
-
-
-## Guideline
-Key aim: This script is already compatible with Epi2Me and can be explored as a show case. 
-
-
-1. Navigate throug the functions and logic of Nextflow processes and the Nextflow pipeline of this repository. Try to understand the logics of the three scripts main.nf, nextflow.config and nextflow_schema.json
-    
-2. Check out the config.yaml file to see which input parameters have been necessary to run the pipeline.
-
-3. Open the bin folder and explore the analysis_neural_network.py file
-   -  Check out how the argument parser was defined and how the python file is structured.
-
-4. Navigate to the envs folder and investigate the enviroment.yaml and the Dockerfile
-   -  Find out how the environment.yaml is used to build the docker container
-   -  Try to build the docker container yourself
-   -  You can also try to pull our prebuilt docker container "stegiopast/modidec" from docker hub
-   -  The container can be used for all three parts of this hackathon
+Import the workflow in Epi2Me:
+   -  Open Epi2Me
+   -  Navigate to Launch
+   -  Click on import workflow -> Import from Github
+   -  Paste https://github.com/Nanopore-Hackathon/wf-modidec_data-curation into the Edit line
+   -  Click on Download
+   -  The repository should now appear on the workflow list in Launch
 
 
 ## Credits & License
 
 This code is provided by Dr.Nicolo Alagna and the Computational Systems Genetics Group of the University Medical Center of Mainz. © 2024 All rights reserved.
 
-For the purpose of the Nanopore Hackathon, participants and collaborators of the event are granted a limited, non-exclusive, non-transferable license to use and modify the Applications for their intended purpose during the Time of the Event. Any further unauthorized reproduction, distribution, modification or publication of the Applications or their contents violates intellectual property rights and is strictly prohibited. For more please see the [Terms and Conditions](https://drive.google.com/file/d/18WN3YRoY9YvpYq6RCtwUQre-VAbN7jH6/view?usp=sharing) of the event.
 
 
