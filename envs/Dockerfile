@@ -9,6 +9,8 @@ ENV PATH "${MAMBA_ROOT_PREFIX}/bin:${PATH}"
 
 RUN micromamba install -n base conda-forge::gcc
 
+RUN micromamba install -n base anaconda::wget
+
 RUN micromamba run -n base pip install ont-remora
 
 USER $MAMBA_USER

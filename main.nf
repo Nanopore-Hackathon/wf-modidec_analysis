@@ -6,6 +6,25 @@ import java.time.LocalDateTime
 nextflow.enable.dsl = 2
 nextflow.preview.recursion=true 
 
+
+process load_kmer_tables {
+
+    input:
+    val(flowcell_type)
+    output:
+    path("*.txt"), emit:kmer_lvl_table
+    script:
+
+    //load kmer table from website
+    """
+    if [[ ${flowcell_type} == "RNA002" ]]; then
+	wget https://raw.githubusercontent.com/nanoporetech/kmer_models/refs/heads/master/rna_r9.4_180mv_70bps/5mer_levels_v1.txt
+	else
+    wget https://raw.githubusercontent.com/nanoporetech/kmer_models/refs/heads/master/rna004/9mer_levels_v1.txt
+    fi
+    """
+}
+
 process RunNeuralNetwork{
     label "modidec"
     publishDir (path: "${params.out_dir}/", mode: "copy")
@@ -29,7 +48,8 @@ process RunNeuralNetwork{
 
 workflow {
     input_dirs = Channel.fromPath("${params.model_path}", type: 'dir')
-    RunNeuralNetwork(file("${params.reference_path}"),file("${params.pod5_path}/*.pod5"),file("${params.bam_path}"),input_dirs,file("${params.level_table_file}"))
+    kmer_table = load_kmer_tables(params.flowcell_type)
+    RunNeuralNetwork(file("${params.reference_path}"),file("${params.pod5_path}/*.pod5"),file("${params.bam_path}"),input_dirs,kmer_table.kmer_lvl_table)
 }
 
 

@@ -34,18 +34,21 @@
                     "title": "Folder path to classification model",
                     "description": "Please provide a folder path to a custom NN model"
                 },
-                "level_table_file": {
+                "flowcell_type": {
                     "type": "string",
-                    "title": "File path to ONT's kmer table for RNA004 reads",
-                    "format": "file-path",
-                    "description": "Provide a file path to ONT's RNA004 table",
-                    "help_text": "The kmer tables are available on ONT's github page.(https://github.com/nanoporetech/kmer_models)"
+                    "title": "Flowcell Type",
+                    "default": "RNA004",
+                    "description": "Select the RNA flowcell type you have generated your data with",
+                    "enum": [
+                        "RNA004",
+                        "RNA002"
+                    ]
                 },
                 "reference_path": {
                     "type": "string",
                     "title": "Reference path",
                     "format": "file-path",
-                    "description": "Provide a txt file with the reference fragment of interest",
+                    "description": "Provide a txt file or fasta file with a single transcript reference sequence",
                     "help_text": ""
                 },
                 "start_index": {
@@ -79,7 +82,7 @@
                     "description": "A dictionary with the modification information, alternative basenames for modified bases with default: Gm, m6A, Ino, Psi. The dictionairy has to be exactly the same as used during training."
                 }
             }, 
-            "required": ["start_index", "end_index", "chunk_size", "max_seq_length", "reference_path", "pod5_path", "bam_path", "model_path", "level_table_file","mod_list"]
+            "required": ["start_index", "end_index", "chunk_size", "max_seq_length", "reference_path", "pod5_path", "bam_path", "model_path", "flowcell_type","mod_list"]
         },
         "advanced_options": {
             "title": "Advanced Options",

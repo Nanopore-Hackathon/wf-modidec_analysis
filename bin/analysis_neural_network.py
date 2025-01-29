@@ -88,9 +88,10 @@ opt_parser.add_argument(
     "-d",
     "--modification_dict",
     dest="modification_dict",
-    help="Define a path to ONT's kmer level table. These can be found on github.",
+    help="Define the modification directory the model has been trained on",
     nargs="+"
 )
+
 
 
 
@@ -273,10 +274,17 @@ def Analysis_Neural_network(
         do_fix_guage=True,
     )
     Variables = (vars_entries[0], vars_entries[1], vars_entries[2], vars_entries[3])
-
-    reference = open(reference_path)
-    reference = reference.read()
-
+    
+    with open(reference_path,"r") as reference_file:
+        reference = ""
+        lines = reference_file.readlines()
+        if lines[0].startswith(">"):
+            lines = lines[1:len(lines)]
+        for line in lines:
+            temp_line = line.replace("\n","")
+            reference += temp_line
+            
+            
     Analysis_NN = NN_analyzer(
         Variables, pod5_dr, bam_fh, read_id, sig_map_refiner, NN_model, reference, modification_list
     )
