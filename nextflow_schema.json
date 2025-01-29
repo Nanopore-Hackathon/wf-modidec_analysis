@@ -71,9 +71,15 @@
                     "default": 40,
                     "description": "Define the maximal length of a sequence that will be loaded by the model at once.",
                     "help_text": "The neural network analysis reads in defined sequence lengths using a sliding window approach."
+                },
+                "mod_list": {
+                    "type": "string",
+                    "title": "Modification Dictionary",
+                    "default": "Gm m6A Ino Psi",
+                    "description": "A dictionary with the modification information, alternative basenames for modified bases with default: Gm, m6A, Ino, Psi. The dictionairy has to be exactly the same as used during training."
                 }
             }, 
-            "required": ["start_index", "end_index", "chunk_size", "max_seq_length", "reference_path", "pod5_path", "bam_path", "model_path", "level_table_file"]
+            "required": ["start_index", "end_index", "chunk_size", "max_seq_length", "reference_path", "pod5_path", "bam_path", "model_path", "level_table_file","mod_list"]
         },
         "advanced_options": {
             "title": "Advanced Options",
