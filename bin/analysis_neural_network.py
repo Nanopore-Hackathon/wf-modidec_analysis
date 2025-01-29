@@ -84,6 +84,15 @@ opt_parser.add_argument(
     metavar="FILE",
 )
 
+opt_parser.add_argument(
+    "-d",
+    "--modification_dict",
+    dest="modification_dict",
+    help="Define a path to ONT's kmer level table. These can be found on github.",
+    nargs="+"
+)
+
+
 
 options = opt_parser.parse_args()
 start_index = int(options.start_index)
@@ -95,14 +104,17 @@ pod5_path = str(options.pod5_path)
 bam_path = str(options.bam_path)
 model_path = str(options.model_path)
 level_table_file = str(options.level_table_file)
+modification_dict = list(options.modification_dict)
 
+print(modification_dict)
+print(len(modification_dict))
 
-def NN_analyzer(variables, pod5_dr, bam_fh, read_id, sig_map_refiner, model, reference):
+def NN_analyzer(variables, pod5_dr, bam_fh, read_id, sig_map_refiner, model, reference, modification_list):
     chunck_size = variables[2]
     max_seq_len = variables[3]
-    labels = 4
+    labels = len(modification_list)
     N_miss = 0
-    reference_track_mod = np.zeros([len(reference), 4])
+    reference_track_mod = np.zeros([len(reference), len(modification_list)])
     start_Index = variables[0]
     for name_id in read_id[variables[0] : variables[1]]:
         pod5_read = pod5_dr.get_read(name_id)
@@ -134,7 +146,7 @@ def NN_analyzer(variables, pod5_dr, bam_fh, read_id, sig_map_refiner, model, ref
             # /// check if the modification position has to be adjusted ///
             position_adjusting = start_of_mapping.ref_reg.start
         except:
-            print("error")
+            print("Error")
             position_adjusting = 0
             seq_resquigle = ""
             Error_read = True
@@ -246,8 +258,9 @@ def Analysis_Neural_network(
     bam_path: str,
     model_path: str,
     level_table_file: str,
+    modification_list: list
 ):
-
+    rgba_colors = ['rgba(230, 25, 75,1)', 'rgba(60, 180, 75, 1)', 'rgba(255, 225, 25, 1)', 'rgba(0, 130, 200, 1)', 'rgba(245, 130, 48, 1)', 'rgba(145, 30, 180, 1)', 'rgba(70, 240, 240, 1)', 'rgba(240, 50, 230, 1)', 'rgba(210, 245, 60, 1)', 'rgba(250, 190, 212, 1)', 'rgba(0, 128, 128, 1)', 'rgba(220, 190, 255, 1)', 'rgba(170, 110, 40, 1)', 'rgba(255, 250, 200, 1)', 'rgba(128, 0, 0, 1)', 'rgba(170, 255, 195, 1)', 'rgba(128, 128, 0, 1)', 'rgba(255, 215, 180, 1)', 'rgba(0, 0, 128, 1)', 'rgb(128, 128, 128, 1)', 'rgba(255, 255, 255, 1)']
     vars_entries = [start_index, end_index, chunk_size, max_seq_length]
     pod5_dr = pod5.DatasetReader(pod5_path)
     bam_fh = io.ReadIndexedBam(bam_path)
@@ -265,70 +278,29 @@ def Analysis_Neural_network(
     reference = reference.read()
 
     Analysis_NN = NN_analyzer(
-        Variables, pod5_dr, bam_fh, read_id, sig_map_refiner, NN_model, reference
+        Variables, pod5_dr, bam_fh, read_id, sig_map_refiner, NN_model, reference, modification_list
     )
 
-    x_axis = np.arange(0, Analysis_NN.shape[0], 1)
+    x_axis = np.arange(1, Analysis_NN.shape[0] + 1, 1)
     print(Analysis_NN)
 
     layout = go.Layout(height=800)
     fig = go.Figure(layout=layout)
 
-    hover_text = [f"Gm: {y_val}" for y_val in Analysis_NN[:, 0]]
-    fig.add_trace(
-        go.Scatter(
-            x=x_axis,
-            y=Analysis_NN[:, 0],
-            mode="lines+markers",
-            line=dict(color="rgba(72,99,156,1)"),
-            hovertext=hover_text,
-            hoverinfo = "text",
-            showlegend=True,
-            name = "Gm freq."
+    for mod_index,modification in enumerate(modification_list):
+        hover_text = [f"{modification}: {y_val}" for y_val in Analysis_NN[:, mod_index]]
+        fig.add_trace(
+            go.Scatter(
+                x=x_axis,
+                y=Analysis_NN[:, mod_index],
+                mode="lines+markers",
+                line=dict(color=rgba_colors[mod_index]),
+                hovertext=hover_text,
+                hoverinfo = "text",
+                showlegend=True,
+                name = f"{modification} freq."
+            )
         )
-    )
-
-    hover_text = [f"$m^6A$: {y_val}" for y_val in Analysis_NN[:, 1]]
-    fig.add_trace(
-        go.Scatter(
-            x=x_axis,
-            y=Analysis_NN[:, 1],
-            mode="lines+markers",
-            line=dict(color="rgba(95,62,139,1)"),
-            hovertext=hover_text,
-            hoverinfo = "text",
-            showlegend=True,
-            name = "m6A freq."
-        )
-    )
-
-    hover_text = [f"Ino: {y_val}" for y_val in Analysis_NN[:, 2]]
-    fig.add_trace(
-        go.Scatter(
-            x=x_axis,
-            y=Analysis_NN[:, 2],
-            mode="lines+markers",            
-            line=dict(color="rgba(132,73,133,1)"),
-            hovertext=hover_text,
-            hoverinfo = "text",
-            showlegend=True,
-            name = "Ino freq."
-        )
-    )
-
-    hover_text = [f"Psi: {y_val}" for y_val in Analysis_NN[:, 3]]
-    fig.add_trace(
-        go.Scatter(
-            x=x_axis,
-            y=Analysis_NN[:, 3],
-            mode="lines+markers",            
-            line=dict(color="rgba(247,153,110,1)"),
-            hovertext=hover_text,
-            hoverinfo = "text",
-            showlegend=True,
-            name="Psi freq."
-        )
-    )
 
     fig.update_layout(
         xaxis=dict(title="Position on reference", gridcolor="white"),
@@ -344,7 +316,6 @@ def Analysis_Neural_network(
 
     plotly.io.write_html(fig, "./detected_modifications.html")
 
-
 Analysis_Neural_network(
     start_index,
     end_index,
@@ -355,4 +326,5 @@ Analysis_Neural_network(
     bam_path,
     model_path,
     level_table_file,
+    modification_dict
 )
