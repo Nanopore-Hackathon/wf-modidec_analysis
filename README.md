@@ -24,7 +24,7 @@ Import the workflow in Epi2Me:
    -  Click on Download
    -  The repository should now appear on the workflow list in Launch
 
-## Data Output
+## Analysis Output
 This part of modidec will provide an interactive plot in html format. Base modification ratios over the position on the transcript of interst will be shown for all modifications and motifs the model has been trained with. Plotted lines per modification can be customly selected and stored in png format. 
 
 ![Modidec analysis output](./figures/Example_analysis_modidec.png)
