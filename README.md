@@ -12,6 +12,7 @@ Install dependencies on your system:
    -  Install [`Nextflow`](https://www.nextflow.io/docs/latest/getstarted.html#installation) (`>=23.10.0`)
    -  Install samtools and minimap
    -  Make sure your [nvidia GPU drivers](https://docs.nvidia.com/datacenter/tesla/driver-installation-guide/#ubuntu-installation) are installed and functional.
+   -  Install the [nvidia-container-toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html) to enable GPU usage from within a docker container. 
 
 Import the workflow in Epi2Me:
    -  Open Epi2Me
