@@ -29,9 +29,7 @@ This part of modidec will provide an interactive plot in html format. Base modif
 
 ![Modidec analysis output](./figures/Example_analysis_modidec.png)
 
-## Credits & License
 
-This code is provided by Dr.Nicolo Alagna and the Computational Systems Genetics Group of the University Medical Center of Mainz. © 2024 All rights reserved.
 
 
 
