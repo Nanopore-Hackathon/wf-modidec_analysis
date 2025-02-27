@@ -163,7 +163,7 @@ def NN_analyzer(variables, pod5_dr, bam_fh, read_id, sig_map_refiner, model, ref
                     [N_segments + 1, chunck_size]
                 )  # initialize the first input of the NN
                 Input_2 = np.zeros(
-                    [N_segments + 1, max_seq_len, labels]
+                    [N_segments + 1, max_seq_len, 4]
                 )  # initialize the second input of the NN
                 for k in range(N_segments):
                     start = k * chunck_size
