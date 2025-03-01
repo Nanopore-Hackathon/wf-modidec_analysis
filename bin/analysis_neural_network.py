@@ -111,17 +111,23 @@ print(modification_dict)
 print(len(modification_dict))
 
 def NN_analyzer(variables, pod5_dr, bam_fh, read_id, sig_map_refiner, model, reference, modification_list):
+    #input_1_list = []
+    #input_2_list = []
+    #predictions_list = []
     chunck_size = variables[2]
     max_seq_len = variables[3]
     labels = len(modification_list)
     N_miss = 0
     reference_track_mod = np.zeros([len(reference), len(modification_list)])
+    alignment_coverage_track = np.zeros(len(reference))
     start_Index = variables[0]
     for name_id in read_id[variables[0] : variables[1]]:
         pod5_read = pod5_dr.get_read(name_id)
         bam_read = bam_fh.get_first_alignment(name_id)
+        reference_start = bam_read.reference_start
+        reference_end = bam_read.reference_end
+        alignment_coverage_track[reference_start:reference_end + 1] += 1
         start_Index += 1
-        print(start_Index)
         seq_resquigle = ""
         position_adjusting = 0
         Error_read = False
@@ -196,10 +202,20 @@ def NN_analyzer(variables, pod5_dr, bam_fh, read_id, sig_map_refiner, model, ref
                 seq_overlap = np.where(seq_overlap > 0.5)[0]
                 len_overlap = len(seq_overlap)
                 Input_1 = np.expand_dims(Input_1, axis=-1)
+                #input_1_list.append(Input_1)
                 Input_2 = np.expand_dims(Input_2, axis=-1)
+                #input_2_list.append(Input_2)
                 X_total = {"Input_1": Input_1, "Input_2": Input_2}
                 # analyze the read with the NN
                 prediction = model.predict(X_total)
+                # if name_id == "5bd4c444-952c-44d0-98bb-b2f2df4a2f38":
+                #     [print(i1) for i1 in Input_1]
+                #     [print(i2) for i2 in Input_2]
+                #     [print(p1) for p1 in prediction]
+                #     np.save("Input1_list_analysis.npy",Input_1)
+                #     np.save("Input2_list_analysis.npy",Input_2)
+                #     np.save("Predictions_list_analysis.npy",prediction)
+                #predictions_list.append(prediction)
                 # reconstruct the final output removing the null part of the predictions
                 Final_seq_binary = []
                 for kk in range(N_segments):  #
@@ -242,11 +258,10 @@ def NN_analyzer(variables, pod5_dr, bam_fh, read_id, sig_map_refiner, model, ref
                             int(mod_probe_position) + int(position_adjusting),
                             int(mod_probe_predicted - 1),
                         ] += 1
-            except:
-                print("No mod detected")
+            except IndexError:
                 N_miss += 1
-
-    return (reference_track_mod) / (np.abs(variables[1] - variables[0]))
+    general_coverage_normalization = (reference_track_mod) / (np.abs(variables[1] - variables[0]))
+    return general_coverage_normalization, reference_track_mod, alignment_coverage_track
 
 
 def Analysis_Neural_network(
@@ -285,22 +300,21 @@ def Analysis_Neural_network(
             reference += temp_line
             
             
-    Analysis_NN = NN_analyzer(
+    Analysis_NN_general_coverage, Analysis_NN_absolute, Alignment_coverage_track = NN_analyzer(
         Variables, pod5_dr, bam_fh, read_id, sig_map_refiner, NN_model, reference, modification_list
     )
 
-    x_axis = np.arange(1, Analysis_NN.shape[0] + 1, 1)
-    print(Analysis_NN)
+    x_axis = np.arange(1, Analysis_NN_general_coverage.shape[0] + 1, 1)
 
     layout = go.Layout(height=800)
     fig = go.Figure(layout=layout)
 
     for mod_index,modification in enumerate(modification_list):
-        hover_text = [f"{modification}: {y_val}" for y_val in Analysis_NN[:, mod_index]]
+        hover_text = [f"{modification}: {y_val}" for y_val in Analysis_NN_general_coverage[:, mod_index]]
         fig.add_trace(
             go.Scatter(
                 x=x_axis,
-                y=Analysis_NN[:, mod_index],
+                y=Analysis_NN_general_coverage[:, mod_index],
                 mode="lines+markers",
                 line=dict(color=rgba_colors[mod_index]),
                 hovertext=hover_text,
@@ -322,7 +336,57 @@ def Analysis_Neural_network(
         plot_bgcolor="rgba(0,0,0,0)",
     )
 
-    plotly.io.write_html(fig, "./detected_modifications.html")
+    plotly.io.write_html(fig, "./detected_modifications_general_coverage.html")
+
+
+    layout = go.Layout(height=800)
+    fig2 = go.Figure(layout=layout)
+
+    normalized_template_coverage = Alignment_coverage_track / max(Alignment_coverage_track)
+
+    hover_text = [f"Coverage track: max. coverage = {max(Alignment_coverage_track)}"]
+    fig2.add_trace(
+        go.Scatter(
+            x=x_axis,
+            y=normalized_template_coverage,
+            mode="lines",
+            line=dict(color='rgba(108,122,137,1)',dash = 'dash', width=1),
+            hovertext=hover_text,
+            hoverinfo = "text",
+            showlegend=True,
+            name = f"Reference coverage: Max = {max(Alignment_coverage_track)} reads"
+        )
+    )
+
+    for mod_index,modification in enumerate(modification_list):
+        hover_text = [f"{modification}: {y_val}" for y_val in (Analysis_NN_absolute[:, mod_index] / Alignment_coverage_track)]
+        fig2.add_trace(
+            go.Scatter(
+                x=x_axis,
+                y=(Analysis_NN_absolute[:, mod_index] / Alignment_coverage_track),
+                mode="lines+markers",
+                line=dict(color=rgba_colors[mod_index]),
+                hovertext=hover_text,
+                hoverinfo = "text",
+                showlegend=True,
+                name = f"{modification} freq."
+            )
+        )
+
+    fig2.update_layout(
+        xaxis=dict(title="Position on reference", gridcolor="white"),
+        yaxis=dict(
+            title="Modification frequency",
+            gridcolor="white",
+            zeroline=True,
+            zerolinecolor="black",
+            range=[0,1]
+        ),
+        plot_bgcolor="rgba(0,0,0,0)",
+    )
+
+    plotly.io.write_html(fig2, "./detected_modifications_local_coverage.html")
+
 
 Analysis_Neural_network(
     start_index,
@@ -336,3 +400,4 @@ Analysis_Neural_network(
     level_table_file,
     modification_dict
 )
+
