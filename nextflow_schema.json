@@ -85,7 +85,7 @@
             "required": ["start_index", "end_index", "chunk_size", "max_seq_length", "reference_path", "pod5_path", "bam_path", "model_path", "flowcell_type","mod_list"]
         },
         "advanced_options": {
-            "title": "Advanced Options",
+            "title": "Processing Options",
             "type": "object",
             "fa_icon": "far fa-question-circle",
             "description": "Advanced options for configuring processes inside the workflow.",
@@ -106,38 +106,6 @@
                     "type": "integer",
                     "description": "How many thread you want to use?",
                     "default": 8
-                },
-                "script_dir": {
-                    "type": "string",
-                    "format": "path",
-                    "description": "Path to the directory nextflow needs to get files from, here it could be the repository"
-                }
-            }
-        },
-        "misc": {
-            "title": "Miscellaneous Options",
-            "type": "object",
-            "description": "Everything else.",
-            "default": "",
-            "properties": {
-                "disable_ping": {
-                    "type": "boolean",
-                    "default": false,
-                    "description": "Enable to prevent sending a workflow ping."
-                },
-                "help": {
-                    "type": "boolean",
-                    "description": "Display help text.",
-                    "fa_icon": "fas fa-question-circle",
-                    "default": false,
-                    "hidden": true
-                },
-                "version": {
-                    "type": "boolean",
-                    "description": "Display version and exit.",
-                    "fa_icon": "fas fa-question-circle",
-                    "default": false,
-                    "hidden": true
                 }
             }
         }
@@ -148,9 +116,6 @@
         },
         {
             "$ref": "#/definitions/advanced_options"
-        },
-        {
-            "$ref": "#/definitions/misc"
         }
     ],
     "properties": {
