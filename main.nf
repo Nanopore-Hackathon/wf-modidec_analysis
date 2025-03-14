@@ -42,7 +42,7 @@ process RunNeuralNetwork{
     mkdir -p pod5s
     mv *.pod5 pod5s/
     mv \$(basename ${params.model_path}) model
-    python ${projectDir}/bin/analysis_neural_network.py -s ${params.start_index} -e ${params.end_index} -c ${params.chunk_size} -x ${params.max_seq_length} -r $reference_path -p ./pod5s -b $bam_path -m ./model -l $level_table_file -d ${params.mod_list} 
+    python ${projectDir}/bin/analysis_neural_network.py -s ${params.start_index} -e ${params.end_index} -c 400 -x 40 -r $reference_path -p ./pod5s -b $bam_path -m ./model -l $level_table_file -d ${params.mod_list} 
     """
 }
 

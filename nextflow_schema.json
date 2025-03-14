@@ -63,18 +63,6 @@
                     "description": "Define the end index of reads you want to retrieve from pod5 file for analysis",
                     "help_text": "Pod5 files store reads in a sorted manner. You can analyse reads by defining a start and end index."
                 },
-                "chunk_size": {
-                    "type": "integer",
-                    "default": 400,
-                    "description": "Define the size of chunks that will be loaded by the model.",
-                    "help_text": "The neural network analysis reads in defined chunk sizes using a sliding window approach."
-                },
-                "max_seq_length": {
-                    "type": "integer",
-                    "default": 40,
-                    "description": "Define the maximal length of a sequence that will be loaded by the model at once.",
-                    "help_text": "The neural network analysis reads in defined sequence lengths using a sliding window approach."
-                },
                 "mod_list": {
                     "type": "string",
                     "title": "Modification Dictionary",
@@ -82,7 +70,7 @@
                     "description": "A dictionary with the modification information, alternative basenames for modified bases with default: Gm, m6A, Ino, Psi. The dictionairy has to be exactly the same as used during training."
                 }
             }, 
-            "required": ["start_index", "end_index", "chunk_size", "max_seq_length", "reference_path", "pod5_path", "bam_path", "model_path", "flowcell_type","mod_list"]
+            "required": ["start_index", "end_index", "reference_path", "pod5_path", "bam_path", "model_path", "flowcell_type","mod_list"]
         },
         "advanced_options": {
             "title": "Processing Options",
@@ -94,7 +82,7 @@
                 "batchsize": {
                     "type": "integer",
                     "description": "How many files would you like to process per iteration?",
-                    "default": 30
+                    "default": 64
                 },
                 "drs": {
                     "title": "Direct RNA",
@@ -104,7 +92,7 @@
                 },
                 "threads": {
                     "type": "integer",
-                    "description": "How many thread you want to use?",
+                    "description": "How many threads you want to use?",
                     "default": 8
                 }
             }
